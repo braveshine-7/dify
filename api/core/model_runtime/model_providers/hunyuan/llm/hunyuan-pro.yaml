@@ -1,0 +1,54 @@
+model: hunyuan-pro  # Model identifier
+# Model display name, can be set in en_US English and zh_Hans Chinese, zh_Hans will default to en_US if not set.
+# Alternatively, if the label is not set, use the model identifier content.
+label:
+  en_US: hunyuan-pro
+model_type: llm  # Model type, claude-2.1 is an LLM
+features:  # Supported features, agent-thought for Agent reasoning, vision for image understanding
+- agent-thought
+model_properties:  # Model properties
+  mode: chat  # LLM mode, complete for text completion model, chat for dialogue model
+  context_size: 200000  # Maximum supported context size
+parameter_rules:  # Model invocation parameter rules, only required for LLM
+- name: model
+  use_template: model
+  type: string
+  default: hunyuan-pro
+  
+- name: temperature  # Invocation parameter variable name
+  # Default preset with 5 variable content configuration templates: temperature/top_p/max_tokens/presence_penalty/frequency_penalty
+  # Directly set the template variable name in use_template, which will use the default configuration in entities.defaults.PARAMETER_RULE_TEMPLATE
+  # If additional configuration parameters are set, they will override the default configuration
+  use_template: temperature
+  type: float
+  default: 1.0
+  min: 0.0
+  max: 2.0
+  help:
+    zh_Hans: 用于控制随机性和多样性的程度。具体来说，temperature值控制了生成文本时对每个候选词的概率分布进行平滑的程度。较高的temperature值会降低概率分布的峰值，使得更多的低概率词被选择，生成结果更加多样化；而较低的temperature值则会增强概率分布的峰值，使得高概率词更容易被选择，生成结果更加确定。
+    en_US: Used to control the degree of randomness and diversity. Specifically, the temperature value controls the degree to which the probability distribution of each candidate word is smoothed when generating text. A higher temperature value will reduce the peak value of the probability distribution, allowing more low-probability words to be selected, and the generated results will be more diverse; while a lower temperature value will enhance the peak value of the probability distribution, making it easier for high-probability words to be selected. , the generated results are more certain.
+- name: top_p
+  use_template: top_p
+  type: float
+  default: 1.0
+  min: 0.0
+  max: 1.0
+- name: stream
+  use_template: stream
+  type: boolean
+  default: false
+- name: streammoderation
+  use_template: streammoderation
+  type: boolean
+  default: false
+- name: enableenhancement
+  use_template: enableenhancement
+  type: boolean
+  default: false
+
+
+# pricing:  # Pricing information
+#   input: '8.00'  # Input price, i.e., Prompt price
+#   output: '24.00'  # Output price, i.e., returned content price
+#   unit: '0.000001'  # Pricing unit, i.e., the above prices are per 100K
+#   currency: USD  # Currency
